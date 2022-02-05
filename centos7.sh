@@ -201,7 +201,7 @@ EOF
 echo "Configuring SSH..."
 cp /etc/ssh/sshd_config $AUDITDIR/sshd_config_$TIME.bak
 sed -i 's/#LogLevel INFO/LogLevel VERBOSE/g' /etc/ssh/sshd_config
-sed -i 's/#MaxAuthTries 6/MaxAuthTries 4/g' /etc/ssh/sshd_config
+sed -i 's/#MaxAuthTries 6/MaxAuthTries 3/g' /etc/ssh/sshd_config
 sed -i 's/#IgnoreRhosts yes/IgnoreRhosts yes/g' /etc/ssh/sshd_config
 sed -i 's/#HostbasedAuthentication no/HostbasedAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
@@ -210,10 +210,17 @@ sed -i 's/#PermitUserEnvironment no/PermitUserEnvironment no/g' /etc/ssh/sshd_co
 sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 300/g' /etc/ssh/sshd_config
 sed -i 's/#ClientAliveCountMax 3/ClientAliveCountMax 0/g' /etc/ssh/sshd_config
 echo "Ciphers aes128-ctr,aes192-ctr,aes256-ctr"  >> /etc/ssh/sshd_config
+echo "AllowTcpForwarding no"  >> /etc/ssh/sshd_config
+echo "X11Forwarding no"  >> /etc/ssh/sshd_config
 chown root:root /etc/ssh/sshd_config
 chmod 600 /etc/ssh/sshd_config
 
 systemctl restart sshd >> $AUDITDIR/service_restart_$TIME.log
+
+echo "Setting up SELinux to permissing"
+sed -i 's/SELINUX=disabled/SELINUX=permissive/g' /etc/selinux/config
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+setenforce 0
 
 echo "Setting default umask for users..."
 line_num=$(grep -n "^[[:space:]]*umask" /etc/bashrc | head -1 | cut -d: -f1)
