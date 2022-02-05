@@ -573,6 +573,10 @@ echo "prohibit password reuse"
 cp /etc/pam.d/password-auth $AUDITDIR/password-reuse_$TIME.bak
 echo "password    required     <pam_unix.so|pam_pwhistory.so> use_authtok sha512 shadow remember=5" >> /etc/pam.d/password-auth
 
+echo "os prohibit password reuse"
+cp /etc/pam.d/system-auth $AUDITDIR/system-password-reuse_$TIME.bak
+echo "password    required     <pam_unix.so|pam_pwhistory.so> use_authtok sha512 shadow remember=5" >> /etc/pam.d/system-auth
+
 echo ""
 echo "Successfully Completed"
 echo "Please check $AUDITDIR"
