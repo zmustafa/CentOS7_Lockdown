@@ -579,6 +579,13 @@ echo "os prohibit password reuse"
 cp /etc/pam.d/system-auth $AUDITDIR/system-password-reuse_$TIME.bak
 echo "password    required     <pam_unix.so|pam_pwhistory.so> use_authtok sha512 shadow remember=5" >> /etc/pam.d/system-auth
 
+echo "pw quality..."
+cp /etc/security/pwquality.conf $AUDITDIR/pwquality-config_$TIME.bak
+sed -i 's/# lcredit = 1/lcredit = -1/g' /etc/security/pwquality.conf
+sed -i 's/# ocredit = 1/ocredit = -1/g' /etc/security/pwquality.conf
+sed -i 's/# ucredit = 1/ucredit = -1/g' /etc/security/pwquality.conf
+   
+
 echo ""
 echo "Successfully Completed"
 echo "Please check $AUDITDIR"
