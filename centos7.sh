@@ -584,6 +584,7 @@ cp /etc/security/pwquality.conf $AUDITDIR/pwquality-config_$TIME.bak
 sed -i 's/# lcredit = 1/lcredit = -1/g' /etc/security/pwquality.conf
 sed -i 's/# ocredit = 1/ocredit = -1/g' /etc/security/pwquality.conf
 sed -i 's/# ucredit = 1/ucredit = -1/g' /etc/security/pwquality.conf
+sed -i 's/# dcredit = 1/dcredit = -1/g' /etc/security/pwquality.conf
    
 
 echo ""
