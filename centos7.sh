@@ -222,6 +222,10 @@ sed -i 's/SELINUX=disabled/SELINUX=permissive/g' /etc/selinux/config
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 setenforce 0
 
+echo "Setting sudoers"
+echo "Defaults use_pty"  >> /etc/sudoers
+
+
 echo "Setting default umask for users..."
 line_num=$(grep -n "^[[:space:]]*umask" /etc/bashrc | head -1 | cut -d: -f1)
 sed -i ${line_num}s/002/027/ /etc/bashrc
