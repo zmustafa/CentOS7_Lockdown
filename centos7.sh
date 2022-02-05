@@ -66,11 +66,13 @@ echo "Setting core dump security limits..."
 echo '* hard core 0' > /etc/security/limits.conf
 
 echo "Generating additional logs..."
+echo '$FileCreateMode 0640' >> /etc/rsyslog.conf
 echo 'auth,user.* /var/log/user' >> /etc/rsyslog.conf
 echo 'kern.* /var/log/kern.log' >> /etc/rsyslog.conf
 echo 'daemon.* /var/log/daemon.log' >> /etc/rsyslog.conf
 echo 'syslog.* /var/log/syslog' >> /etc/rsyslog.conf
 echo 'lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.* /var/log/unused.log' >> /etc/rsyslog.conf
+
 touch /var/log/user /var/log/kern.log /var/log/daemon.log /var/log/syslog /var/log/unused.log
 chmod og-rwx /var/log/user /var/log/kern.log /var/log/daemon.log /var/log/syslog /var/log/unused.log
 chown root:root /var/log/user /var/log/kern.log /var/log/daemon.log /var/log/syslog /var/log/unused.log
