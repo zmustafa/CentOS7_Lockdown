@@ -593,6 +593,12 @@ echo "chronyd..."
 cp /etc/sysconfig/chronyd $AUDITDIR/chronyd-config_$TIME.bak
  sed -i 's/OPTIONS=""/OPTIONS="-u chrony"/g' /etc/sysconfig/chronyd
 
+echo "fstab..."
+cp /etc/fstab $AUDITDIR/fstab_$TIME.bak
+ sed -ie 's:\(.*\)\s\(/home\)\s\s*\(\w*\)\s*\(\w*\)\s*\(.*\):\1 \2 \3 \4,nosuid,nodev\5:' /etc/fstab
+ sed -ie 's:\(.*\)\s\(/tmp\)\s\s*\(\w*\)\s*\(\w*\)\s*\(.*\):\1 \2 \3 \4,nodev,noexec\5:' /etc/fstab
+
+
 
 echo ""
 echo "Successfully Completed"
