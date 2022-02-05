@@ -519,6 +519,14 @@ cp /etc/systemd/coredump.conf $AUDITDIR/coredump.conf_$TIME.bak
 sed -i 's/#ProcessSizeMax=2G/ProcessSizeMax=0/g' /etc/systemd/coredump.conf
 sed -i 's/#Storage=external/Storage=none/g' /etc/systemd/coredump.conf
 
+echo "Modifying journald.conf..."
+cp /etc/systemd/journald.conf $AUDITDIR/journald.conf_$TIME.bak
+sed -i 's/#Compress=yes/Compress=yes/g' /etc/systemd/coredump.conf
+sed -i 's/#ForwardToSyslog=yes/ForwardToSyslog=yes/g' /etc/systemd/coredump.conf
+sed -i 's/#Storage=auto/Storage=persistent/g' /etc/systemd/coredump.conf
+
+
+
 echo "Modifying Network Parameters..."
 cp /etc/sysctl.conf $AUDITDIR/sysctl.conf_$TIME.bak
 
