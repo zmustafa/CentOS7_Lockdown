@@ -558,6 +558,7 @@ net.ipv6.conf.all.accept_redirects=0
 net.ipv6.conf.default.accept_redirects=0
 net.ipv6.conf.default.accept_redirects=0
 kernel.randomize_va_space=2
+fs.suid_dumpable=0
 EOF
 
 echo "Disabling IPv6..."
