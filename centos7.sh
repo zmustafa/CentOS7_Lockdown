@@ -218,11 +218,13 @@ chmod 600 /etc/ssh/sshd_config
 systemctl restart sshd >> $AUDITDIR/service_restart_$TIME.log
 
 echo "Setting up SELinux to permissing"
+cp /etc/selinux/config $AUDITDIR/selinux_config_$TIME.bak
 sed -i 's/SELINUX=disabled/SELINUX=permissive/g' /etc/selinux/config
 sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 setenforce 0
 
 echo "Setting sudoers"
+cp /etc/sudoers $AUDITDIR/sudoers_$TIME.bak
 echo "Defaults use_pty"  >> /etc/sudoers
 
 
@@ -512,6 +514,11 @@ for dir in `/bin/cat /etc/passwd |\
     fi
 done
 
+echo "Modifying coredump.conf..."
+cp /etc/systemd/coredump.conf $AUDITDIR/coredump.conf_$TIME.bak
+sed -i 's/#ProcessSizeMax=2G/ProcessSizeMax=0/g' /etc/systemd/coredump.conf
+sed -i 's/#Storage=external/Storage=none/g' /etc/systemd/coredump.conf
+
 echo "Modifying Network Parameters..."
 cp /etc/sysctl.conf $AUDITDIR/sysctl.conf_$TIME.bak
 
@@ -537,6 +544,8 @@ net.ipv6.conf.all.accept_ra=0
 net.ipv6.conf.default.accept_ra=0
 net.ipv6.conf.all.accept_redirects=0
 net.ipv6.conf.default.accept_redirects=0
+net.ipv6.conf.default.accept_redirects=0
+kernel.randomize_va_space=2
 EOF
 
 echo "Disabling IPv6..."
