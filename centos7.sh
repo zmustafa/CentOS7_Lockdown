@@ -244,6 +244,8 @@ chmod 644 /etc/passwd
 chmod 000 /etc/shadow
 chmod 000 /etc/gshadow
 chmod 644 /etc/group
+chmod 664 /etc/at.deny
+chmod 600 /boot/grub2/grub.cfg
 chown root:root /etc/passwd
 chown root:root /etc/shadow
 chown root:root /etc/gshadow
