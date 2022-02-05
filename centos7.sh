@@ -20,6 +20,11 @@ install rds /bin/true
 install tipc /bin/true
 EOF
 
+yum install aide -y
+sudo aide --init
+mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+echo "0 5 * * * /usr/sbin/aide --check" >> /etc/crontab
+
 echo "Removing GCC compiler..."
 yum -y remove gcc*
 
@@ -601,6 +606,7 @@ cp /etc/fstab $AUDITDIR/fstab_$TIME.bak
  sed -ie 's:\(.*\)\s\(/tmp\)\s\s*\(\w*\)\s*\(\w*\)\s*\(.*\):\1 \2 \3 \4,nodev,noexec,nosuid\5:' /etc/fstab
  sed -ie 's:\(.*\)\s\(/var/tmp\)\s\s*\(\w*\)\s*\(\w*\)\s*\(.*\):\1 \2 \3 \4,nodev,noexec,nosuid\5:' /etc/fstab
  sed -ie 's:\(.*\)\s\(/dev/shm\)\s\s*\(\w*\)\s*\(\w*\)\s*\(.*\):\1 \2 \3 \4,nodev,noexec,nosuid\5:' /etc/fstab
+
 
 
 echo ""
