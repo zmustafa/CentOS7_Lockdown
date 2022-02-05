@@ -586,6 +586,10 @@ sed -i 's/# ocredit = 1/ocredit = -1/g' /etc/security/pwquality.conf
 sed -i 's/# ucredit = 1/ucredit = -1/g' /etc/security/pwquality.conf
 sed -i 's/# dcredit = 1/dcredit = -1/g' /etc/security/pwquality.conf
    
+echo "chronyd..."
+cp /etc/sysconfig/chronyd $AUDITDIR/chronyd-config_$TIME.bak
+ sed -i 's/OPTIONS=""/OPTIONS="-u chrony"/g' /etc/sysconfig/chronyd
+
 
 echo ""
 echo "Successfully Completed"
